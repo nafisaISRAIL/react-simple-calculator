@@ -3,9 +3,14 @@ import ReactDom from 'react-dom'
 import './style.css'
 
 
-function calculate(params) {
-    //To Do
-   return params; 
+function getResult(params) {
+    var total = 0;
+    params = params.match(/[+\-]*(\.\d+|\d+(\.\d+)?)/g) || [];
+    while(params.length){
+        total+= parseFloat(params.shift());
+    }
+
+    return total;
 }
 
 
@@ -24,21 +29,16 @@ class Frame extends React.Component {
         if (v && v !== '=') {
             text = this.state.inputText + v;
         } else {
-            this.calculate();
+            text = getResult(this.state.inputText);            
         }
         this.setState({inputText: text});
-    }
-
-    calculate() {
-        const result = calculate(this.state.inputText);
-        this.setState({inputText: result});
     }
 
     render() {
         return(
             <main className="react-colculator">
                 <InputField inputText={this.state.inputText} />
-                <ButtonSetEquations onChangeText={this.onChangeText} calculate={this.calculate}/>
+                <ButtonSetEquations onChangeText={this.onChangeText}/>
                 <ButtonSetNumber onChangeText={this.onChangeText} />
                 <ButtonSetFunctions onChangeText={this.onChangeText} />
             </main>
