@@ -28,7 +28,7 @@ class Frame extends React.Component {
         let text = ''
         if (v && v !== '=') {
             text = this.state.inputText + v;
-        } else {
+        } else if (v === '='){
             text = getResult(this.state.inputText);            
         }
         this.setState({inputText: text});
