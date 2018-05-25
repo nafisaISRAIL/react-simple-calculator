@@ -1,16 +1,12 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import './style.css'
+import math from 'mathjs'
 
 
 function getResult(params) {
-    var total = 0;
-    params = params.match(/[+\-]*(\.\d+|\d+(\.\d+)?)/g) || [];
-    while(params.length){
-        total+= parseFloat(params.shift());
-    }
-
-    return total;
+    var result = String(math.eval(params));
+    return result;
 }
 
 
@@ -36,11 +32,11 @@ class Frame extends React.Component {
 
     render() {
         return(
-            <main className="react-colculator">
+            <main className="react-calculator">
                 <InputField inputText={this.state.inputText} />
                 <ButtonSetEquations onChangeText={this.onChangeText}/>
                 <ButtonSetNumber onChangeText={this.onChangeText} />
-                <ButtonSetFunctions onChangeText={this.onChangeText} />
+                <ButtonSetFunctions onChangeText={this.onChangeText} />                
             </main>
         );
     }
@@ -52,7 +48,7 @@ class InputField extends React.Component {
         const { inputText } = this.props;
         return(
             <div>
-                <input className="screen-row" type="text" readOnly value={ inputText }/>
+                <input className="input" type="text" readOnly value={ inputText }/>
             </div>
         );
     }
@@ -86,9 +82,6 @@ class Button extends React.Component {
 
 
 class ButtonSetEquations extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return(
             <section className="button-equations">
@@ -106,6 +99,7 @@ class ButtonSetNumber extends React.Component {
     render() {
         return(
             <section className="button-numbers">
+                <Button text="0" onChangeText={this.props.onChangeText} />            
                 <Button text="1" onChangeText={this.props.onChangeText} />
                 <Button text="2" onChangeText={this.props.onChangeText} />
                 <Button text="3" onChangeText={this.props.onChangeText} />
@@ -114,8 +108,7 @@ class ButtonSetNumber extends React.Component {
                 <Button text="6" onChangeText={this.props.onChangeText} />
                 <Button text="7" onChangeText={this.props.onChangeText} />
                 <Button text="8" onChangeText={this.props.onChangeText} />
-                <Button text="9" onChangeText={this.props.onChangeText} />
-                <Button text="10" onChangeText={this.props.onChangeText} />
+                <Button text="9" onChangeText={this.props.onChangeText} />                
             </section>
         );
     }
